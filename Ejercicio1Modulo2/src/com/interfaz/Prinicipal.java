@@ -19,7 +19,12 @@ public class Prinicipal {
         ResultadoLectura resultadoLectura = OperacionesUsuario.leerTeclado("Ingrese el path del archivo:");
         if (resultadoLectura.isLecturaCorrecta()) {
             List<String> listaAtributos = OperacionesArchivo.calcularAtributosArchivo(resultadoLectura.getContenido());
-            System.out.println(listaAtributos);
+            if (listaAtributos!=null) {
+                System.out.println(listaAtributos);
+            }
+            else{
+                System.err.println("No se encontró el archivo");
+            }       
         }
         else{
             System.err.println("Ocurrio un error");
