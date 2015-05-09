@@ -12,10 +12,16 @@ import java.io.InputStreamReader;
 
 /**
  *
- * @author CEC
+ * @author FDL
+ * @version 1.0.0
  */
 public class OperacionesUsuario {
     
+    /**
+     * Permite leer datos desde el teclado
+     * @param mensaje Texto para mostrar al usuario sobre lo que se solicita que ingrese
+     * @return Devuelve el resultado de la lectura y su contenido
+     */
     public static  ResultadoLectura leerTeclado (String mensaje){
         try{
             System.out.println(mensaje);
@@ -31,7 +37,7 @@ public class OperacionesUsuario {
             ResultadoLectura resultadoLectura = new ResultadoLectura(constantes.ERROR_INGRESO_DATOS, false);
             return resultadoLectura;
         }
-          catch(Exception ex){
+        catch(Exception ex){
 //            ex.printStackTrace();
             System.out.println("Error al leer teclado ex: " + ex.getLocalizedMessage());
             ResultadoLectura resultadoLectura = new ResultadoLectura(constantes.ERROR_INGRESO_DATOS, false);
