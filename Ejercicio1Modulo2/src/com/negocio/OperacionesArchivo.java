@@ -6,7 +6,6 @@
 package com.negocio;
 
 import java.io.File;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,10 +17,10 @@ import java.util.List;
  */
 public class OperacionesArchivo {
     
-    /*
+    /**
     * Permite obtener los atributos de un archivo dado su ruta. Los atributos se devuelven en una lista
     * @param path Ruta del archivo
-    * @return Lista de atributos del archivo, si no existe se retorna null
+    * @return Lista de atributos del archivo, si no existe el archivo se retorna null
     */
     public static List<String> calcularAtributosArchivo(String path){
         File file1 = new File(path);
@@ -39,11 +38,11 @@ public class OperacionesArchivo {
              
              List<String> listaAtributos = new ArrayList<>();
              
-             listaAtributos.add(String.valueOf(tamanioArchivoEnKB));
-             listaAtributos.add(String.valueOf(tamanioArchivoEnMB));
-             listaAtributos.add(String.valueOf(fechaFormateada));
-             listaAtributos.add(String.valueOf(permisoEscritura));
-             listaAtributos.add(String.valueOf(permisoLectura));
+             listaAtributos.add("Tamaño en KB: "+String.valueOf(tamanioArchivoEnKB));
+             listaAtributos.add("Tamaño en MB: "+String.valueOf(tamanioArchivoEnMB));
+             listaAtributos.add("Última modificación: "+String.valueOf(fechaFormateada));
+             listaAtributos.add("Tiene permiso escritura: "+String.valueOf(permisoEscritura));
+             listaAtributos.add("Tiene permiso lectura: "+String.valueOf(permisoLectura));
              
              return listaAtributos;
         }
