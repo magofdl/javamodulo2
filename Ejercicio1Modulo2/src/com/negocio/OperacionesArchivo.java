@@ -6,6 +6,7 @@
 package com.negocio;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,6 +48,42 @@ public class OperacionesArchivo {
              return listaAtributos;
         }
         return null;
+    }
+    
+    public static List<String> listarContenidoDirectorio(String path){
+         File file1 = new File(path);
+         
+         List<String> listaContenido = new ArrayList<>();
+         
+         if (file1.exists()) {
+            
+             if (file1.isDirectory()) {
+                 
+                 listaContenido.add("\n"+file1.getName()+" (directorio)");
+                 
+                 File [] listaFicheros = file1.listFiles();
+                 
+                 for (File fichero : listaFicheros) {
+
+                     if (fichero.isDirectory()) {
+                         
+                         List<String> listaContenidoAux = listarContenidoDirectorio(fichero.getPath());
+                         List<String> listaContenidoAux2 = new ArrayList<>();
+                         for (String valorAux : listaContenidoAux) {
+                            listaContenidoAux2.add("\t\t\t"+valorAux);
+                         }
+                         listaContenido.addAll(listaContenidoAux2);
+                     }
+                     else{
+                         listaContenido.add("\n\t"+fichero.getName()+" (archivo)");
+                     }
+                 }
+             }
+//             else{
+//                 listaContenido.add("\n"+file1.getName()+" (archivo)");
+//             }
+        }
+         return listaContenido;
     }
             
 }
