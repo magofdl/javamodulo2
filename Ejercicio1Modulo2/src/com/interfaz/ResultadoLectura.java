@@ -10,10 +10,12 @@ package com.interfaz;
  * @author CEC
  */
 public class ResultadoLectura {
-    private String contenido;
+   private String contenido;
     private boolean lecturaCorrecta;
 
-    public ResultadoLectura() {
+    public ResultadoLectura(String contenido, boolean lecturaCorrecta) {
+        this.contenido = contenido;
+        this.lecturaCorrecta = lecturaCorrecta;
     }
 
     /**
@@ -43,6 +45,4 @@ public class ResultadoLectura {
     public void setLecturaCorrecta(boolean lecturaCorrecta) {
         this.lecturaCorrecta = lecturaCorrecta;
     }
-    
-    
 }
