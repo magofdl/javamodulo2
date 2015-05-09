@@ -9,7 +9,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -58,7 +60,8 @@ public class OperacionesArchivo {
     }
 
     /**
-     * Permite obtener el contendio de un directorio dado su ruta. El contenido se devuelve en una lista
+     * Permite obtener el contendio de un directorio dado su ruta. El contenido
+     * se devuelve en una lista
      *
      * @param path Ruta del directorio
      * @return Lista de contenidos del direcotrio, si no existe el directorio se
@@ -100,12 +103,12 @@ public class OperacionesArchivo {
         return listaContenido;
     }
 
-    
     /**
      * Permite obtener el contendio de un archivo.
      *
      * @param path Ruta del archivo
-     * @return Contenido del archivo. Si no se ecuentra el archivo se retorna null
+     * @return Contenido del archivo. Si no se ecuentra el archivo se retorna
+     * null
      * @throws FileNotFoundException, IOException
      */
     public static String leerArchivo(String path) throws FileNotFoundException, IOException {
@@ -115,26 +118,45 @@ public class OperacionesArchivo {
         try {
             if (file.exists()) {
                 if (file.isDirectory() == false) {
-                    
+
                     fileReader = new FileReader(file);
                     BufferedReader bufferedReader = new BufferedReader(fileReader);
                     //lectura del archivo
                     String linea;
                     while ((linea = bufferedReader.readLine()) != null) {
-                        contenidoArchivo = contenidoArchivo + linea +"\n";
+                        contenidoArchivo = contenidoArchivo + linea + "\n";
                     }
                     fileReader.close();
                 }
-            }
-            else{
+            } else {
                 return null;
             }
-            
+
         } finally {
             if (fileReader != null) {
                 fileReader.close();
             }
         }
         return contenidoArchivo;
+    }
+
+    public static void escribirArchivo(String path, String contenido) throws IOException {
+        File file = new File(path);
+        FileWriter fileWriter = null;
+
+        try {
+            if (file.exists()) {
+                if (file.isDirectory() == false) {
+                    fileWriter = new FileWriter(file,true);
+                    PrintWriter printWiter = new PrintWriter(fileWriter);
+                    printWiter.println(contenido);
+                    fileWriter.close();
+                }
+            }
+        } finally {
+            if (fileWriter != null) {
+                fileWriter.close();
+            }
+        }
     }
 }

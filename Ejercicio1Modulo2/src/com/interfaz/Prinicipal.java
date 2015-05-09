@@ -48,24 +48,35 @@ public class Prinicipal {
 //                System.err.println("No se encontró el archivo");
 //            }       
 //        }
+//        try {
+//            ResultadoLectura resultadoLectura = OperacionesUsuario.leerTeclado("Ingrese el path del archivo a leer:");
+//            if (resultadoLectura.isLecturaCorrecta()) {
+//
+//                String contenidoArchivo = OperacionesArchivo.leerArchivo(resultadoLectura.getContenido());
+//                if (contenidoArchivo!=null) {
+//                    System.out.println(contenidoArchivo);
+//                }
+//                else{
+//                System.err.println("No se encontró el archivo");
+//            } 
+//
+//            } else {
+//                System.err.println("Ocurrio un error al leer el teclado");
+//            }
+//
+//        } catch (IOException ex) {
+//            Logger.getLogger(Prinicipal.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         try {
-            ResultadoLectura resultadoLectura = OperacionesUsuario.leerTeclado("Ingrese el path del archivo a leer:");
-            if (resultadoLectura.isLecturaCorrecta()) {
-
-                String contenidoArchivo = OperacionesArchivo.leerArchivo(resultadoLectura.getContenido());
-                if (contenidoArchivo!=null) {
-                    System.out.println(contenidoArchivo);
+            ResultadoLectura resultadoLecturaPath = OperacionesUsuario.leerTeclado("Ingrese el path del archivo a escribir:");
+            if (resultadoLecturaPath.isLecturaCorrecta()) {
+                ResultadoLectura resultadoLecturaContenido = OperacionesUsuario.leerTeclado("Ingrese texto a escribir:");
+                if (resultadoLecturaContenido.isLecturaCorrecta()) {
+                    OperacionesArchivo.escribirArchivo(resultadoLecturaPath.getContenido(), resultadoLecturaContenido.getContenido());
                 }
-                else{
-                System.err.println("No se encontró el archivo");
-            } 
-
-            } else {
-                System.err.println("Ocurrio un error al leer el teclado");
             }
-
-        } catch (IOException ex) {
-            Logger.getLogger(Prinicipal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+             Logger.getLogger(Prinicipal.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
