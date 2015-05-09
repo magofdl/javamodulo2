@@ -140,6 +140,13 @@ public class OperacionesArchivo {
         return contenidoArchivo;
     }
 
+    /**
+     * Permite escribir al final de un archivo.
+     *
+     * @param path Ruta del archivo
+     * @param contenido Texto que se desea escribir
+     * @throws IOException
+     */
     public static void escribirArchivo(String path, String contenido) throws IOException {
         File file = new File(path);
         FileWriter fileWriter = null;
@@ -147,7 +154,7 @@ public class OperacionesArchivo {
         try {
             if (file.exists()) {
                 if (file.isDirectory() == false) {
-                    fileWriter = new FileWriter(file,true);
+                    fileWriter = new FileWriter(file, true);
                     PrintWriter printWiter = new PrintWriter(fileWriter);
                     printWiter.println(contenido);
                     fileWriter.close();
