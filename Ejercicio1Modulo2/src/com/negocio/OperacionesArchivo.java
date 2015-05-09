@@ -166,7 +166,12 @@ public class OperacionesArchivo {
         }
     }
 
-    
+    /**
+     * Permite eliminar un archivo.
+     *
+     * @param path Ruta del archivo
+     * @return El estado de intentar eliminar el archivo
+     */
     public static boolean eliminarArchivo(String path) {
         File originalfile = new File(path);
         if (originalfile.exists()) {
@@ -176,7 +181,14 @@ public class OperacionesArchivo {
         }
         return false;
     }
-    
+
+    /**
+     * Permite renombrar un archivo.
+     *
+     * @param path Ruta del archivo
+     * @param nuevoNombre Nuevo nombre del archivo
+     * @return El estado de intentar renombrar el archivo
+     */
     public static boolean renombrarArchivo(String path, String nuevoNombre) {
         File originalfile = new File(path);
         if (originalfile.exists()) {
