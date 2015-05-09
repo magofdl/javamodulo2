@@ -67,17 +67,41 @@ public class Prinicipal {
 //        } catch (IOException ex) {
 //            Logger.getLogger(Prinicipal.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-        try {
-            ResultadoLectura resultadoLecturaPath = OperacionesUsuario.leerTeclado("Ingrese el path del archivo a escribir:");
-            if (resultadoLecturaPath.isLecturaCorrecta()) {
-                ResultadoLectura resultadoLecturaContenido = OperacionesUsuario.leerTeclado("Ingrese texto a escribir:");
-                if (resultadoLecturaContenido.isLecturaCorrecta()) {
-                    OperacionesArchivo.escribirArchivo(resultadoLecturaPath.getContenido(), resultadoLecturaContenido.getContenido());
+//        try {
+//            ResultadoLectura resultadoLecturaPath = OperacionesUsuario.leerTeclado("Ingrese el path del archivo a escribir:");
+//            if (resultadoLecturaPath.isLecturaCorrecta()) {
+//                ResultadoLectura resultadoLecturaContenido = OperacionesUsuario.leerTeclado("Ingrese texto a escribir:");
+//                if (resultadoLecturaContenido.isLecturaCorrecta()) {
+//                    OperacionesArchivo.escribirArchivo(resultadoLecturaPath.getContenido(), resultadoLecturaContenido.getContenido());
+//                }
+//            }
+//        } catch (Exception ex) {
+//             Logger.getLogger(Prinicipal.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        ResultadoLectura resultadoLecturaPath = OperacionesUsuario.leerTeclado("Ingrese el path del archivo a eliminar:");
+//        if (resultadoLecturaPath.isLecturaCorrecta()) {
+//            boolean archivoEliminado=OperacionesArchivo.eliminarArchivo(resultadoLecturaPath.getContenido());
+//            if (archivoEliminado) {
+//                System.out.println("Archivo eliminado");
+//            }
+//            else{
+//                System.err.println("No se pudo eliminar el archivo");
+//            }
+//        }
+        ResultadoLectura resultadoLecturaPath = OperacionesUsuario.leerTeclado("Ingrese el path del archivo a renombrar:");
+        if (resultadoLecturaPath.isLecturaCorrecta()) {
+
+            ResultadoLectura resultadoLecturaNombre = OperacionesUsuario.leerTeclado("Ingrese el nuevo nombre de archivo:");
+
+            if (resultadoLecturaNombre.isLecturaCorrecta()) {
+                boolean archivoRenombrado = OperacionesArchivo.renombrarArchivo(resultadoLecturaPath.getContenido(),resultadoLecturaNombre.getContenido());
+                if (archivoRenombrado) {
+                    System.out.println("Archivo renombrado");
+                } else {
+                    System.err.println("No se pudo renombrar el archivo");
                 }
             }
-        } catch (Exception ex) {
-             Logger.getLogger(Prinicipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
+        }
     }
 }

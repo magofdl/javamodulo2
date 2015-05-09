@@ -12,7 +12,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -165,5 +164,28 @@ public class OperacionesArchivo {
                 fileWriter.close();
             }
         }
+    }
+
+    
+    public static boolean eliminarArchivo(String path) {
+        File originalfile = new File(path);
+        if (originalfile.exists()) {
+            if (originalfile.isDirectory() == false) {
+                return originalfile.delete();
+            }
+        }
+        return false;
+    }
+    
+    public static boolean renombrarArchivo(String path, String nuevoNombre) {
+        File originalfile = new File(path);
+        if (originalfile.exists()) {
+            if (originalfile.isDirectory() == false) {
+                String newFilePath = originalfile.getAbsolutePath().replace(originalfile.getName(), "") + nuevoNombre;
+                File newfile = new File(newFilePath);
+                return originalfile.renameTo(newfile);
+            }
+        }
+        return false;
     }
 }
