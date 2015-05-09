@@ -50,7 +50,7 @@ public class OperacionesArchivo {
         return null;
     }
     
-    public static List<String> listarContenidoDirectorio(String path){
+    public static List<String> listarContenidoDirectorio(String path,String tabs){
          File file1 = new File(path);
          
          List<String> listaContenido = new ArrayList<>();
@@ -59,23 +59,24 @@ public class OperacionesArchivo {
             
              if (file1.isDirectory()) {
                  
-                 listaContenido.add("\n"+file1.getName()+" (directorio)");
+                 listaContenido.add("\n"+tabs+file1.getName()+" (directorio)");
                  
                  File [] listaFicheros = file1.listFiles();
                  
                  for (File fichero : listaFicheros) {
 
                      if (fichero.isDirectory()) {
-                         
-                         List<String> listaContenidoAux = listarContenidoDirectorio(fichero.getPath());
+                         String tabAux="\t"+tabs;
+                         List<String> listaContenidoAux = listarContenidoDirectorio(fichero.getPath(),tabAux);
                          List<String> listaContenidoAux2 = new ArrayList<>();
                          for (String valorAux : listaContenidoAux) {
-                            listaContenidoAux2.add("\t\t\t"+valorAux);
+                            listaContenidoAux2.add(tabAux+valorAux);
                          }
                          listaContenido.addAll(listaContenidoAux2);
                      }
                      else{
-                         listaContenido.add("\n\t"+fichero.getName()+" (archivo)");
+                          String tabAux="\t"+tabs;
+                         listaContenido.add("\n"+tabAux+fichero.getName()+" (archivo)");
                      }
                  }
              }

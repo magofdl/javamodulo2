@@ -33,13 +33,14 @@ public class Prinicipal {
         ResultadoLectura resultadoLectura = OperacionesUsuario.leerTeclado("Ingrese el path del directorio:");
         
         if (resultadoLectura.isLecturaCorrecta()) {
-            List<String> listaContenido = OperacionesArchivo.listarContenidoDirectorio(resultadoLectura.getContenido());
+            List<String> listaContenido = OperacionesArchivo.listarContenidoDirectorio(resultadoLectura.getContenido(),"\t");
             if (listaContenido!=null) {
-                System.out.println(listaContenido);
+//                System.out.println(listaContenido);
                 
-//                for (String aux : listaContenido) {
-//                    System.out.println(aux);
-//                }
+                for (String aux : listaContenido) {
+                    System.out.print(aux);
+                }
+                System.out.print("\n");
             }
             else{
                 System.err.println("No se encontró el archivo");
