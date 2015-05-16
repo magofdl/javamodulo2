@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  *
@@ -137,6 +138,66 @@ public class OperacionesArchivo {
             }
         }
         return contenidoArchivo;
+    }
+
+    /**
+     * Permite procesar el contendio de un archivo.
+     *
+     * @param path Ruta del archivo
+     * @return Lista de clientes. Si no se ecuentra el archivo se retorna
+     * null
+     * @throws FileNotFoundException, IOException
+     */
+    public static ArrayList<Cliente> procesarArchivoClientes(String path) throws FileNotFoundException, IOException {
+        File file = new File(path);
+        String contenidoArchivo = "";
+        ArrayList<Cliente> listaClientes = new ArrayList<>();
+        FileReader fileReader = null;
+        try {
+            if (file.exists()) {
+                if (file.isDirectory() == false) {
+
+                    fileReader = new FileReader(file);
+                    BufferedReader bufferedReader = new BufferedReader(fileReader);
+                    Scanner scanner = new Scanner("");
+                    //lectura del archivo
+                    String linea;
+                    Cliente cliente = new Cliente();
+
+                    while ((linea = bufferedReader.readLine()) != null) {
+                        scanner = new Scanner(linea);
+                        scanner.useDelimiter("\\s*,\\s*");
+                        String[] myStringArray = new String[8];
+                        int contador = 0;
+                        while (scanner.hasNext()) {
+                            myStringArray[contador] = scanner.next();
+                            contador++;
+                        }
+
+                        cliente.setIdentificacion(myStringArray[0]);
+                        cliente.setNombres(myStringArray[1]);
+                        cliente.setApellidos(myStringArray[2]);
+                        cliente.setCiudadNacimiento(myStringArray[3]);
+                        cliente.setSexo(myStringArray[4]);
+                        cliente.setNumeroCuenta(myStringArray[5]);
+                        cliente.setSaldo(myStringArray[6]);
+                        cliente.setEstadoCivil(myStringArray[7]);
+
+                        listaClientes.add(cliente);
+
+                    }
+                    fileReader.close();
+                }
+            } else {
+                return null;
+            }
+
+        } finally {
+            if (fileReader != null) {
+                fileReader.close();
+            }
+        }
+        return listaClientes;
     }
 
     /**

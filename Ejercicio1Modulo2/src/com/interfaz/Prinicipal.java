@@ -5,8 +5,10 @@
  */
 package com.interfaz;
 
+import com.negocio.Cliente;
 import com.negocio.OperacionesArchivo;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -88,20 +90,31 @@ public class Prinicipal {
 //                System.err.println("No se pudo eliminar el archivo");
 //            }
 //        }
-        ResultadoLectura resultadoLecturaPath = OperacionesUsuario.leerTeclado("Ingrese el path del archivo a renombrar:");
-        if (resultadoLecturaPath.isLecturaCorrecta()) {
-
-            ResultadoLectura resultadoLecturaNombre = OperacionesUsuario.leerTeclado("Ingrese el nuevo nombre de archivo:");
-
-            if (resultadoLecturaNombre.isLecturaCorrecta()) {
-                boolean archivoRenombrado = OperacionesArchivo.renombrarArchivo(resultadoLecturaPath.getContenido(),resultadoLecturaNombre.getContenido());
-                if (archivoRenombrado) {
-                    System.out.println("Archivo renombrado");
+//        ResultadoLectura resultadoLecturaPath = OperacionesUsuario.leerTeclado("Ingrese el path del archivo a renombrar:");
+//        if (resultadoLecturaPath.isLecturaCorrecta()) {
+//            ResultadoLectura resultadoLecturaNombre = OperacionesUsuario.leerTeclado("Ingrese el nuevo nombre de archivo:");
+//            if (resultadoLecturaNombre.isLecturaCorrecta()) {
+//                boolean archivoRenombrado = OperacionesArchivo.renombrarArchivo(resultadoLecturaPath.getContenido(),resultadoLecturaNombre.getContenido());
+//                if (archivoRenombrado) {
+//                    System.out.println("Archivo renombrado");
+//                } else {
+//                    System.err.println("No se pudo renombrar el archivo");
+//                }
+//            }
+//        }
+        try {
+            ResultadoLectura resultadoLecturaPath = OperacionesUsuario.leerTeclado("Ingrese el path del archivo a procesar:");
+            if (resultadoLecturaPath.isLecturaCorrecta()) {
+                ArrayList<Cliente>  listaClientes = OperacionesArchivo.procesarArchivoClientes(resultadoLecturaPath.getContenido());
+                if (listaClientes.size()>0) {
+                    System.out.println("Clientes encontrados: \n"+listaClientes.get(0));
                 } else {
-                    System.err.println("No se pudo renombrar el archivo");
+                    System.err.println("No se encontraron clientes");
                 }
             }
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
     }
 }
