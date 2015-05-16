@@ -105,23 +105,37 @@ public class Prinicipal {
 //                }
 //            }
 //        }
-//        try {
-//            ResultadoLectura resultadoLecturaPath = OperacionesUsuario.leerTeclado("Ingrese el path del archivo a procesar:");
-//            if (resultadoLecturaPath.isLecturaCorrecta()) {
-//                Date date = new Date();
-//                System.out.println("Inicio :" + date);
-//                ArrayList<Cliente> listaClientes = OperacionesArchivo.procesarArchivoClientes(resultadoLecturaPath.getContenido());
-//                date = new Date();
-//                System.out.println("Fin :" + date);
-//                if (listaClientes.size() > 0) {
-//                    System.out.println("Clientes encontrados: \n" + listaClientes.get(listaClientes.size()-1));
-//                } else {
-//                    System.err.println("No se encontraron clientes");
-//                }
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try {
+            ResultadoLectura resultadoLecturaPath = OperacionesUsuario.leerTeclado("Ingrese el path del archivo a procesar:");
+            if (resultadoLecturaPath.isLecturaCorrecta()) {
+                Date date = new Date();
+                System.out.println("Inicio :" + date);
+                ArrayList<Cliente> listaClientes = OperacionesArchivo.procesarArchivoClientes(resultadoLecturaPath.getContenido());
+                date = new Date();
+                System.out.println("Fin :" + date);
+                if (listaClientes.size() > 0) {
+                    System.out.println("Clientes encontrados: \n" + listaClientes.get(listaClientes.size() - 1));
+                } else {
+                    System.err.println("No se encontraron clientes");
+                }
+            }
+        } catch (ClassNotFoundException e) {
+            System.err.println("ClassNotFoundException");
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            System.err.println("InstantiationException");
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            System.err.println("IllegalAccessException");
+            e.printStackTrace();
+        } catch (SQLException e) {
+            System.err.println("SQLException");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.err.println("IOException");
+            e.printStackTrace();
+        }
+
 //        try {
 //            ResultadoLectura resultadoLectura = OperacionesUsuario.leerTeclado("Ingrese el key:");
 //            if (resultadoLectura.isLecturaCorrecta()) {
@@ -136,23 +150,22 @@ public class Prinicipal {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-        MySqlConnect mySqlConnect = new MySqlConnect();
-
-        try {
-            mySqlConnect.ejecturarConexionDB();
-        } catch (ClassNotFoundException e) {
-            System.err.println("ClassNotFoundException");
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            System.err.println("InstantiationException");
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            System.err.println("IllegalAccessException");
-            e.printStackTrace();
-        } catch (SQLException e) {
-            System.err.println("SQLException");
-            e.printStackTrace();
-        }
-
+//        MySqlConnect mySqlConnect = new MySqlConnect();
+//
+//        try {
+//            mySqlConnect.ejecturarConexionDB();
+//        } catch (ClassNotFoundException e) {
+//            System.err.println("ClassNotFoundException");
+//            e.printStackTrace();
+//        } catch (InstantiationException e) {
+//            System.err.println("InstantiationException");
+//            e.printStackTrace();
+//        } catch (IllegalAccessException e) {
+//            System.err.println("IllegalAccessException");
+//            e.printStackTrace();
+//        } catch (SQLException e) {
+//            System.err.println("SQLException");
+//            e.printStackTrace();
+//        }
     }
 }

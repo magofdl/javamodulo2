@@ -5,7 +5,7 @@
  */
 package com.interfaz;
 
-import com.utilidades.constantes;
+import com.utilidades.Constantes;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -34,13 +34,13 @@ public class OperacionesUsuario {
         catch(IOException ex){
 //            ex.printStackTrace();
             System.out.println("Error al leer teclado: " + ex.getLocalizedMessage());
-            ResultadoLectura resultadoLectura = new ResultadoLectura(constantes.ERROR_INGRESO_DATOS, false);
+            ResultadoLectura resultadoLectura = new ResultadoLectura(Constantes.ERROR_INGRESO_DATOS, false);
             return resultadoLectura;
         }
         catch(Exception ex){
 //            ex.printStackTrace();
             System.out.println("Error al leer teclado ex: " + ex.getLocalizedMessage());
-            ResultadoLectura resultadoLectura = new ResultadoLectura(constantes.ERROR_INGRESO_DATOS, false);
+            ResultadoLectura resultadoLectura = new ResultadoLectura(Constantes.ERROR_INGRESO_DATOS, false);
             return resultadoLectura;
         }
     }

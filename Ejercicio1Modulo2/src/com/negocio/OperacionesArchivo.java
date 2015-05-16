@@ -5,6 +5,8 @@
  */
 package com.negocio;
 
+import com.datos.MySqlConnect;
+import com.utilidades.Constantes;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,6 +14,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -146,15 +149,16 @@ public class OperacionesArchivo {
      * Permite procesar el contendio de un archivo.
      *
      * @param path Ruta del archivo
-     * @return Lista de clientes. Si no se ecuentra el archivo se retorna
-     * null
+     * @return Lista de clientes. Si no se ecuentra el archivo se retorna null
      * @throws FileNotFoundException, IOException
      */
-    public static ArrayList<Cliente> procesarArchivoClientes(String path) throws FileNotFoundException, IOException {
+    public static ArrayList<Cliente> procesarArchivoClientes(String path) throws FileNotFoundException, IOException, SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         File file = new File(path);
         String contenidoArchivo = "";
         ArrayList<Cliente> listaClientes = new ArrayList<>();
         FileReader fileReader = null;
+        MySqlConnect mySqlConnect = null;
+
         try {
             if (file.exists()) {
                 if (file.isDirectory() == false) {
@@ -165,25 +169,29 @@ public class OperacionesArchivo {
                     //lectura del archivo
                     String linea;
                     Cliente cliente = new Cliente();
-
+                    mySqlConnect = new MySqlConnect();
+                    mySqlConnect.ejecturarConexionDB();
+                    
                     while ((linea = bufferedReader.readLine()) != null) {
                         scanner = new Scanner(linea);
                         scanner.useDelimiter("\\s*,\\s*");
                         String[] myStringArray = new String[8];
                         int contador = 0;
-                        
+
 //                        StringTokenizer stringTokenizer = new StringTokenizer(linea, ",");
 //                        while (stringTokenizer.hasMoreElements()) {
 //                         myStringArray[contador] = stringTokenizer.nextElement().toString();
 //                            contador++;
 //                        }
- 
 //                        while (scanner.hasNext()) {
 //                            myStringArray[contador] = scanner.next();
 //                            contador++;
 //                        }
+                        //enviar datos sql
+                        myStringArray = linea.split(",");//mas rapido que el scanner y el StringTokenizer ya que no tiene loop
 
-                        myStringArray=linea.split(",");//mas rapido que el scanner y el StringTokenizer ya que no tiene loop
+                        mySqlConnect.ejecutarSP(myStringArray, Constantes.SP_INSERTAR_CLIENTE);
+
                         cliente.setIdentificacion(myStringArray[0]);
                         cliente.setNombres(myStringArray[1]);
                         cliente.setApellidos(myStringArray[2]);
@@ -206,8 +214,17 @@ public class OperacionesArchivo {
             if (fileReader != null) {
                 fileReader.close();
             }
+
+            if (mySqlConnect != null) {
+                if (mySqlConnect.getConexion() != null) {
+                    mySqlConnect.getConexion().close();
+                }
+            }
         }
         return listaClientes;
+    }
+
+    private static void guardarClientesEnBase() {
     }
 
     /**
@@ -271,13 +288,14 @@ public class OperacionesArchivo {
         }
         return false;
     }
-      
+
     /**
      * Permite leer una propiedad.
+     *
      * @param key para buscar dentrio del archivo de propiedades
      * @return El valor de la propiedad. Si no se encuentra se devuelve null
      */
-    public static String leerPropiedad(String key){
+    public static String leerPropiedad(String key) {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("Propiedades"); // Propiedades.properties
         if (resourceBundle.containsKey(key)) {
             return resourceBundle.getString(key);
