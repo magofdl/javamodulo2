@@ -271,7 +271,12 @@ public class OperacionesArchivo {
         }
         return false;
     }
-    
+      
+    /**
+     * Permite leer una propiedad.
+     * @param key para buscar dentrio del archivo de propiedades
+     * @return El valor de la propiedad. Si no se encuentra se devuelve null
+     */
     public static String leerPropiedad(String key){
         ResourceBundle resourceBundle = ResourceBundle.getBundle("Propiedades"); // Propiedades.properties
         if (resourceBundle.containsKey(key)) {

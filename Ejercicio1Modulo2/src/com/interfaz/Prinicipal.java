@@ -5,9 +5,11 @@
  */
 package com.interfaz;
 
+import com.datos.MySqlConnect;
 import com.negocio.Cliente;
 import com.negocio.OperacionesArchivo;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -120,18 +122,35 @@ public class Prinicipal {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
+//        try {
+//            ResultadoLectura resultadoLectura = OperacionesUsuario.leerTeclado("Ingrese el key:");
+//            if (resultadoLectura.isLecturaCorrecta()) {
+//                String valorPropiedad = OperacionesArchivo.leerPropiedad(resultadoLectura.getContenido());
+//                if (valorPropiedad!=null) {
+//                    System.out.println("Valor propiedad: " + valorPropiedad);
+//                }
+//                else{
+//                      System.err.println("No se encontró la propiedad");
+//                }
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+        MySqlConnect mySqlConnect = new MySqlConnect();
+
         try {
-            ResultadoLectura resultadoLectura = OperacionesUsuario.leerTeclado("Ingrese el key:");
-            if (resultadoLectura.isLecturaCorrecta()) {
-                String valorPropiedad = OperacionesArchivo.leerPropiedad(resultadoLectura.getContenido());
-                if (valorPropiedad!=null) {
-                    System.out.println("Valor propiedad: " + valorPropiedad);
-                }
-                else{
-                      System.err.println("No se encontró la propiedad");
-                }
-            }
-        } catch (Exception e) {
+            mySqlConnect.ejecturarConexionDB();
+        } catch (ClassNotFoundException e) {
+            System.err.println("ClassNotFoundException");
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            System.err.println("InstantiationException");
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            System.err.println("IllegalAccessException");
+            e.printStackTrace();
+        } catch (SQLException e) {
+            System.err.println("SQLException");
             e.printStackTrace();
         }
 
