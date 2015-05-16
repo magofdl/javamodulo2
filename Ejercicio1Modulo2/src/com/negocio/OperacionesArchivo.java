@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
@@ -171,19 +172,18 @@ public class OperacionesArchivo {
                         String[] myStringArray = new String[8];
                         int contador = 0;
                         
-                        StringTokenizer stringTokenizer = new StringTokenizer(linea, ",");
-                        
-                        while (stringTokenizer.hasMoreElements()) {
-                         myStringArray[contador] = stringTokenizer.nextElement().toString();
-                            contador++;
-                        }
+//                        StringTokenizer stringTokenizer = new StringTokenizer(linea, ",");
+//                        while (stringTokenizer.hasMoreElements()) {
+//                         myStringArray[contador] = stringTokenizer.nextElement().toString();
+//                            contador++;
+//                        }
  
 //                        while (scanner.hasNext()) {
 //                            myStringArray[contador] = scanner.next();
 //                            contador++;
 //                        }
 
-                        myStringArray=linea.split(",");//mas rapido que el scanner
+                        myStringArray=linea.split(",");//mas rapido que el scanner y el StringTokenizer ya que no tiene loop
                         cliente.setIdentificacion(myStringArray[0]);
                         cliente.setNombres(myStringArray[1]);
                         cliente.setApellidos(myStringArray[2]);
@@ -270,5 +270,13 @@ public class OperacionesArchivo {
             }
         }
         return false;
+    }
+    
+    public static String leerPropiedad(String key){
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("Propiedades"); // Propiedades.properties
+        if (resourceBundle.containsKey(key)) {
+            return resourceBundle.getString(key);
+        }
+        return null;
     }
 }

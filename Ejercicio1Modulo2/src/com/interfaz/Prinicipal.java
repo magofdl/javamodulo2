@@ -103,18 +103,32 @@ public class Prinicipal {
 //                }
 //            }
 //        }
+//        try {
+//            ResultadoLectura resultadoLecturaPath = OperacionesUsuario.leerTeclado("Ingrese el path del archivo a procesar:");
+//            if (resultadoLecturaPath.isLecturaCorrecta()) {
+//                Date date = new Date();
+//                System.out.println("Inicio :" + date);
+//                ArrayList<Cliente> listaClientes = OperacionesArchivo.procesarArchivoClientes(resultadoLecturaPath.getContenido());
+//                date = new Date();
+//                System.out.println("Fin :" + date);
+//                if (listaClientes.size() > 0) {
+//                    System.out.println("Clientes encontrados: \n" + listaClientes.get(listaClientes.size()-1));
+//                } else {
+//                    System.err.println("No se encontraron clientes");
+//                }
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         try {
-            ResultadoLectura resultadoLecturaPath = OperacionesUsuario.leerTeclado("Ingrese el path del archivo a procesar:");
-            if (resultadoLecturaPath.isLecturaCorrecta()) {
-                Date date = new Date();
-                System.out.println("Inicio :" + date);
-                ArrayList<Cliente> listaClientes = OperacionesArchivo.procesarArchivoClientes(resultadoLecturaPath.getContenido());
-                date = new Date();
-                System.out.println("Fin :" + date);
-                if (listaClientes.size() > 0) {
-                    System.out.println("Clientes encontrados: \n" + listaClientes.get(listaClientes.size()-1));
-                } else {
-                    System.err.println("No se encontraron clientes");
+            ResultadoLectura resultadoLectura = OperacionesUsuario.leerTeclado("Ingrese el key:");
+            if (resultadoLectura.isLecturaCorrecta()) {
+                String valorPropiedad = OperacionesArchivo.leerPropiedad(resultadoLectura.getContenido());
+                if (valorPropiedad!=null) {
+                    System.out.println("Valor propiedad: " + valorPropiedad);
+                }
+                else{
+                      System.err.println("No se encontró la propiedad");
                 }
             }
         } catch (Exception e) {
