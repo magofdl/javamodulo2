@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 /**
  *
@@ -169,11 +170,20 @@ public class OperacionesArchivo {
                         scanner.useDelimiter("\\s*,\\s*");
                         String[] myStringArray = new String[8];
                         int contador = 0;
-                        while (scanner.hasNext()) {
-                            myStringArray[contador] = scanner.next();
+                        
+                        StringTokenizer stringTokenizer = new StringTokenizer(linea, ",");
+                        
+                        while (stringTokenizer.hasMoreElements()) {
+                         myStringArray[contador] = stringTokenizer.nextElement().toString();
                             contador++;
                         }
+ 
+//                        while (scanner.hasNext()) {
+//                            myStringArray[contador] = scanner.next();
+//                            contador++;
+//                        }
 
+                        myStringArray=linea.split(",");//mas rapido que el scanner
                         cliente.setIdentificacion(myStringArray[0]);
                         cliente.setNombres(myStringArray[1]);
                         cliente.setApellidos(myStringArray[2]);

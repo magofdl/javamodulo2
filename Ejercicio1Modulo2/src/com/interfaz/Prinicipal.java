@@ -9,6 +9,7 @@ import com.negocio.Cliente;
 import com.negocio.OperacionesArchivo;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -105,9 +106,13 @@ public class Prinicipal {
         try {
             ResultadoLectura resultadoLecturaPath = OperacionesUsuario.leerTeclado("Ingrese el path del archivo a procesar:");
             if (resultadoLecturaPath.isLecturaCorrecta()) {
-                ArrayList<Cliente>  listaClientes = OperacionesArchivo.procesarArchivoClientes(resultadoLecturaPath.getContenido());
-                if (listaClientes.size()>0) {
-                    System.out.println("Clientes encontrados: \n"+listaClientes.get(0));
+                Date date = new Date();
+                System.out.println("Inicio :" + date);
+                ArrayList<Cliente> listaClientes = OperacionesArchivo.procesarArchivoClientes(resultadoLecturaPath.getContenido());
+                date = new Date();
+                System.out.println("Fin :" + date);
+                if (listaClientes.size() > 0) {
+                    System.out.println("Clientes encontrados: \n" + listaClientes.get(listaClientes.size()-1));
                 } else {
                     System.err.println("No se encontraron clientes");
                 }
