@@ -27,8 +27,16 @@ import java.util.StringTokenizer;
  *
  * @author FDL
  */
-public class OperacionesArchivo {
+public class OperacionesArchivo extends Thread{
 
+    @Override
+    public void run() {
+        super.run(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
+    
+    
     /**
      * Permite obtener los atributos de un archivo dado su ruta. Los atributos
      * se devuelven en una lista
