@@ -7,6 +7,7 @@ package com.interfaz;
 
 import com.datos.MySqlConnect;
 import com.negocio.Cliente;
+import com.negocio.EjemploThread;
 import com.negocio.OperacionesArchivo;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -105,38 +106,41 @@ public class Prinicipal {
 //                }
 //            }
 //        }
-        try {
-            ResultadoLectura resultadoLecturaPath = OperacionesUsuario.leerTeclado("Ingrese el path del archivo a procesar:");
-            if (resultadoLecturaPath.isLecturaCorrecta()) {
-                Date date = new Date();
-                System.out.println("Inicio :" + date);
-                ArrayList<Cliente> listaClientes = OperacionesArchivo.procesarArchivoClientes(resultadoLecturaPath.getContenido());
-                date = new Date();
-                System.out.println("Fin :" + date);
-                if (listaClientes.size() > 0) {
-                    System.out.println("Clientes encontrados: \n" + listaClientes.get(listaClientes.size() - 1));
-                } else {
-                    System.err.println("No se encontraron clientes");
-                }
-            }
-        } catch (ClassNotFoundException e) {
-            System.err.println("ClassNotFoundException");
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            System.err.println("InstantiationException");
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            System.err.println("IllegalAccessException");
-            e.printStackTrace();
-        } catch (SQLException e) {
-            System.err.println("SQLException");
-            e.printStackTrace();
-        } catch (IOException e) {
-            System.err.println("IOException");
-            e.printStackTrace();
-        }
-
 //        try {
+//            //para probar insertar en archivo
+//            ResultadoLectura resultadoLecturaPath = OperacionesUsuario.leerTeclado("Ingrese el path del archivo a procesar:");
+//            if (resultadoLecturaPath.isLecturaCorrecta()) {
+//                Date date = new Date();
+//                System.out.println("Inicio :" + date);
+//                ArrayList<Cliente> listaClientes = OperacionesArchivo.procesarArchivoClientes(resultadoLecturaPath.getContenido());
+//                date = new Date();
+//                System.out.println("Fin :" + date);
+//                if (listaClientes.size() > 0) {
+//                    System.out.println("Clientes encontrados: \n" + listaClientes.get(listaClientes.size() - 1));
+//                } else {
+//                    System.err.println("No se encontraron clientes");
+//                }
+//            }
+//        } catch (ClassNotFoundException e) {
+//            System.err.println("ClassNotFoundException");
+//            e.printStackTrace();
+//        } catch (InstantiationException e) {
+//            System.err.println("InstantiationException");
+//            e.printStackTrace();
+//        } catch (IllegalAccessException e) {
+//            System.err.println("IllegalAccessException");
+//            e.printStackTrace();
+//        } catch (SQLException e) {
+//            System.err.println("SQLException");
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            System.err.println("IOException");
+//            e.printStackTrace();
+//        }
+//
+//        //fin prueba de insercion
+//        try {
+        //lectura de propiedades
 //            ResultadoLectura resultadoLectura = OperacionesUsuario.leerTeclado("Ingrese el key:");
 //            if (resultadoLectura.isLecturaCorrecta()) {
 //                String valorPropiedad = OperacionesArchivo.leerPropiedad(resultadoLectura.getContenido());
@@ -167,5 +171,15 @@ public class Prinicipal {
 //            System.err.println("SQLException");
 //            e.printStackTrace();
 //        }
+        
+        EjemploThread thread1= new EjemploThread("Mabel");
+        EjemploThread thread2= new EjemploThread("magofdl");
+        EjemploThread thread3= new EjemploThread(":)");
+        
+        thread1.start();
+        thread2.start();
+        thread3.start();
+        
+        
     }
 }
