@@ -10,6 +10,7 @@ import com.utilidades.Constantes;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -54,6 +55,30 @@ public class MySqlConnect {
         stmt.close();
     }
 
+    
+    public ResultSet ejecutarSpConsulta(String []args,String store_name) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException
+    {
+            int tamanio=args.length;
+            String call="{call "+store_name+"(";
+            for(int i=0;i<tamanio;i++)
+            {
+                if(i==tamanio-1)
+                {
+                    call=call.concat("?)}");
+                }
+                else
+                {
+                    call=call.concat("?,");
+                }
+            }            
+            CallableStatement cs = conexion.prepareCall(call);
+            for(int i=0;i<tamanio;i++)
+            {
+                cs.setString(i+1, args[i]);
+            }
+            ResultSet resultado=cs.executeQuery();
+            return resultado;
+    }
     /**
      * @return the conexion
      */

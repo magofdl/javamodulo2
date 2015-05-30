@@ -62,6 +62,11 @@ public class ConsultaEmpleadosInternalFrame extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jTable1);
 
         buscarButton.setText("Buscar");
+        buscarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarButtonActionPerformed(evt);
+            }
+        });
 
         salirButton.setText("Salir");
 
@@ -124,6 +129,33 @@ public class ConsultaEmpleadosInternalFrame extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    public String buscarParametro() {
+        String valorParametro = "";
+
+        if (cedulaTextField.getText().isEmpty() == false) {
+            valorParametro = "c";
+        } else {
+            if (nombresTextField.getText().isEmpty() == false) {
+                valorParametro = "n";
+            } else {
+                if (apellidosTextField.getText().isEmpty() == false) {
+                    valorParametro = "a";
+                }
+            }
+        }
+        return valorParametro;
+    }
+
+    private void buscarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarButtonActionPerformed
+        // TODO add your handling code here:
+
+        try {
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_buscarButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
