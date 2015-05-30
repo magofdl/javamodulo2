@@ -45,7 +45,7 @@ public class Principal extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
         consultaEmpleadosMenuItem = new javax.swing.JMenuItem();
         ingresoEmpleadoMenuItem = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        editarEmpleadoMenuItem = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
@@ -91,9 +91,14 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu4.add(ingresoEmpleadoMenuItem);
 
-        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_3, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem4.setText("Editar empleado");
-        jMenu4.add(jMenuItem4);
+        editarEmpleadoMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_3, java.awt.event.InputEvent.CTRL_MASK));
+        editarEmpleadoMenuItem.setText("Editar empleado");
+        editarEmpleadoMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editarEmpleadoMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu4.add(editarEmpleadoMenuItem);
 
         jMenuBar1.add(jMenu4);
 
@@ -176,7 +181,7 @@ public class Principal extends javax.swing.JFrame {
             previusInternalFrame.dispose();//close the previos internalframe
         }
         
-        IngresarEmpleadoInternalFrame ingresarEmpleadoInternalFrame = new IngresarEmpleadoInternalFrame();
+        IngresarEmpleadoInternalFrame ingresarEmpleadoInternalFrame = new IngresarEmpleadoInternalFrame(false);
         previusInternalFrame=ingresarEmpleadoInternalFrame;
         
         this.add(ingresarEmpleadoInternalFrame);
@@ -195,6 +200,54 @@ public class Principal extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_ingresoEmpleadoMenuItemActionPerformed
+
+    private void editarEmpleadoMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarEmpleadoMenuItemActionPerformed
+        // TODO add your handling code here:
+//         if(previusInternalFrame !=null) {//make sure its not null
+//           previusInternalFrame.dispose();//close the previos internalframe
+//       }
+//        
+//        ActualizarEmpleadoInternalFrame actualizarEmpleadoInternalFrame = new ActualizarEmpleadoInternalFrame();
+//        previusInternalFrame=actualizarEmpleadoInternalFrame;
+//        
+//        this.add(actualizarEmpleadoInternalFrame);
+//        actualizarEmpleadoInternalFrame.show();
+//        try {
+//            actualizarEmpleadoInternalFrame.setMaximum(true);
+//        } catch (Exception ex) {
+//            System.err.println("Ocurrió un error: " + ex.getLocalizedMessage());
+//            ex.printStackTrace();
+//
+//            StringWriter stringWriter = new StringWriter();
+//            PrintWriter printWriter = new PrintWriter(stringWriter);
+//            ex.printStackTrace(printWriter);
+//            String stackError = stringWriter.toString().substring(0, 150);
+//            JOptionPane.showMessageDialog(rootPane, "Ocurrió un error: " + stackError);
+//        }
+        
+        if (previusInternalFrame != null) {//make sure its not null
+            previusInternalFrame.dispose();//close the previos internalframe
+        }
+        
+        IngresarEmpleadoInternalFrame ingresarEmpleadoInternalFrame = new IngresarEmpleadoInternalFrame(true);
+        previusInternalFrame=ingresarEmpleadoInternalFrame;
+        
+        this.add(ingresarEmpleadoInternalFrame);
+        ingresarEmpleadoInternalFrame.show();
+        try {
+            ingresarEmpleadoInternalFrame.setMaximum(true);
+        } catch (Exception ex) {
+            System.err.println("Ocurrió un error: " + ex.getLocalizedMessage());
+            ex.printStackTrace();
+
+            StringWriter stringWriter = new StringWriter();
+            PrintWriter printWriter = new PrintWriter(stringWriter);
+            ex.printStackTrace(printWriter);
+            String stackError = stringWriter.toString().substring(0, 150);
+            JOptionPane.showMessageDialog(rootPane, "Ocurrió un error: " + stackError);
+        }
+        
+    }//GEN-LAST:event_editarEmpleadoMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -233,6 +286,7 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem consultaEmpleadosMenuItem;
+    private javax.swing.JMenuItem editarEmpleadoMenuItem;
     private javax.swing.JMenuItem ingresoEmpleadoMenuItem;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu3;
@@ -241,7 +295,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;

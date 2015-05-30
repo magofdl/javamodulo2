@@ -38,47 +38,63 @@ public class MySqlConnect {
     }
 
     public void ejecutarSP(String[] args, String storeName) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        int tamanio = args.length;
-        String call = "{ call " + storeName + "(";
-        for (int i = 0; i < tamanio; i++) {
-            if (i == tamanio - 1) {
-                call = call.concat("?)}");
-            } else {
-                call = call.concat("?,");
+
+        String call;
+        if (args == null) {
+            call = "{ call " + storeName + " }";
+        } else {
+            call = "{ call " + storeName + "(";
+            int tamanio = args.length;
+            for (int i = 0; i < tamanio; i++) {
+                if (i == tamanio - 1) {
+                    call = call.concat("?)}");
+                } else {
+                    call = call.concat("?,");
+                }
             }
         }
+
         CallableStatement stmt = this.getConexion().prepareCall(call);
-        for (int i = 0; i < tamanio; i++) {
-            stmt.setString(i + 1, args[i]);
+
+        if (args != null) {
+            int tamanio = args.length;
+            for (int i = 0; i < tamanio; i++) {
+                stmt.setString(i + 1, args[i]);
+            }
         }
+
         stmt.execute();
         stmt.close();
     }
 
-    
-    public ResultSet ejecutarSpConsulta(String []args,String store_name) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException
-    {
-            int tamanio=args.length;
-            String call="{call "+store_name+"(";
-            for(int i=0;i<tamanio;i++)
-            {
-                if(i==tamanio-1)
-                {
-                    call=call.concat("?)}");
+    public ResultSet ejecutarSpConsulta(String[] args, String store_name) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+
+        String call;
+        if (args == null) {
+            call = "{ call " + store_name + " }";
+        } else {
+            call = "{ call " + store_name + "(";
+            int tamanio = args.length;
+            for (int i = 0; i < tamanio; i++) {
+                if (i == tamanio - 1) {
+                    call = call.concat("?)}");
+                } else {
+                    call = call.concat("?,");
                 }
-                else
-                {
-                    call=call.concat("?,");
-                }
-            }            
-            CallableStatement cs = conexion.prepareCall(call);
-            for(int i=0;i<tamanio;i++)
-            {
-                cs.setString(i+1, args[i]);
             }
-            ResultSet resultado=cs.executeQuery();
-            return resultado;
+        }
+        CallableStatement cs = conexion.prepareCall(call);
+        if (args != null) {
+            int tamanio = args.length;
+            for (int i = 0; i < tamanio; i++) {
+                cs.setString(i + 1, args[i]);
+            }
+        }
+
+        ResultSet resultado = cs.executeQuery();
+        return resultado;
     }
+
     /**
      * @return the conexion
      */
@@ -92,7 +108,5 @@ public class MySqlConnect {
     public void setConexion(Connection conexion) {
         this.conexion = conexion;
     }
-    
-    
 
 }

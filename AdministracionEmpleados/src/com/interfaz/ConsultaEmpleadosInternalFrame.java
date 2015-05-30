@@ -86,6 +86,11 @@ public class ConsultaEmpleadosInternalFrame extends javax.swing.JInternalFrame {
         });
 
         salirButton.setText("Salir");
+        salirButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salirButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -253,6 +258,11 @@ public class ConsultaEmpleadosInternalFrame extends javax.swing.JInternalFrame {
             evt.consume();
         }
     }//GEN-LAST:event_cedulaTextFieldKeyTyped
+
+    private void salirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirButtonActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_salirButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

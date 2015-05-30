@@ -27,6 +27,9 @@ public class GestionEmpleados {
         } else if (parametro.equalsIgnoreCase("a")) {
             nombreSP = OperacionesArchivo.leerPropiedad("empleado.sp3");
         }
+        else if (parametro.equalsIgnoreCase("t")) {
+            nombreSP = OperacionesArchivo.leerPropiedad("empleado.sp5");
+        }
 
         MySqlConnect mySqlConnect = null;
         ResultSet resultado;
@@ -40,6 +43,16 @@ public class GestionEmpleados {
     public static void ingresarEmpleado(String[] argumentos) throws FileNotFoundException, IOException, SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         String nombreSPIngreso = "";
         nombreSPIngreso = OperacionesArchivo.leerPropiedad("empleado.sp0");
+        MySqlConnect mySqlConnect = null;
+        ResultSet resultado;
+        mySqlConnect = new MySqlConnect();
+        mySqlConnect.ejecturarConexionDB();
+        mySqlConnect.ejecutarSP(argumentos, nombreSPIngreso);
+    }
+    
+        public static void actualizarEmpleado(String[] argumentos) throws FileNotFoundException, IOException, SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        String nombreSPIngreso = "";
+        nombreSPIngreso = OperacionesArchivo.leerPropiedad("empleado.sp4");
         MySqlConnect mySqlConnect = null;
         ResultSet resultado;
         mySqlConnect = new MySqlConnect();

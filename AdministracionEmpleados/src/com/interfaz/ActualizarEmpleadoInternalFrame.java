@@ -5,6 +5,17 @@
  */
 package com.interfaz;
 
+import com.negocio.GestionEmpleados;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author CEC
@@ -27,21 +38,149 @@ public class ActualizarEmpleadoInternalFrame extends javax.swing.JInternalFrame 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        listaEmpleadosTable = new javax.swing.JTable();
+        consultarEmpleadosButton = new java.awt.Button();
+        label1 = new java.awt.Label();
+
+        listaEmpleadosTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        listaEmpleadosTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                listaEmpleadosTableMousePressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(listaEmpleadosTable);
+
+        consultarEmpleadosButton.setLabel("Consultar");
+        consultarEmpleadosButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consultarEmpleadosButtonActionPerformed(evt);
+            }
+        });
+
+        label1.setText("Actualizar empleado");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(164, 164, 164)
+                        .addComponent(consultarEmpleadosButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(127, 127, 127)
+                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(163, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(consultarEmpleadosButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public DefaultTableModel llenarTabla(ResultSet resultadoConsulta) throws SQLException {
+        DefaultTableModel defaultTableModel = new DefaultTableModel();
+
+        defaultTableModel.setColumnCount(0);
+        defaultTableModel.addColumn("Identificaion");
+        defaultTableModel.addColumn("Nombres");
+        defaultTableModel.addColumn("Apellidos");
+        defaultTableModel.addColumn("Correo");
+        defaultTableModel.addColumn("Cargo");
+
+        resultadoConsulta.last();
+        defaultTableModel.setNumRows(resultadoConsulta.getRow());
+        resultadoConsulta.beforeFirst();
+        int fila = 0;
+        while (resultadoConsulta.next()) {
+            String value = resultadoConsulta.getString("emp_identificacion");
+            defaultTableModel.setValueAt(value, fila, 0);
+            value = resultadoConsulta.getString("emp_nombre");
+            defaultTableModel.setValueAt(value, fila, 1);
+            value = resultadoConsulta.getString("emp_apellidos");
+            defaultTableModel.setValueAt(value, fila, 2);
+            value = resultadoConsulta.getString("emp_correo");
+            defaultTableModel.setValueAt(value, fila, 3);
+            value = resultadoConsulta.getString("emp_cargo");
+            defaultTableModel.setValueAt(value, fila, 4);
+            fila++;
+        }
+
+        return defaultTableModel;
+    }
+
+    private void consultarEmpleadosButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarEmpleadosButtonActionPerformed
+        // TODO add your handling code here:
+
+        try {
+            ResultSet busquedaEmpleado = GestionEmpleados.invocarProcedimientoBusqueda("t", null);
+
+            DefaultTableModel defaultTableModel = this.llenarTabla(busquedaEmpleado);
+            this.listaEmpleadosTable.setModel(defaultTableModel);
+
+        } catch (IOException | SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+            System.err.println("Ocurrió un error: " + ex.getLocalizedMessage());
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(rootPane, "Ocurrió un error: " + ex.getLocalizedMessage());
+        }
+    }//GEN-LAST:event_consultarEmpleadosButtonActionPerformed
+
+    private void listaEmpleadosTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaEmpleadosTableMousePressed
+        // TODO add your handling code here:
+
+        if (evt.getClickCount() == 2) {
+            // your valueChanged overridden method
+           
+            IngresarEmpleadoInternalFrame ingresarEmpleadoInternalFrame = new IngresarEmpleadoInternalFrame(true);
+            this.setVisible(false);
+            this.getParent().add(ingresarEmpleadoInternalFrame);
+            ingresarEmpleadoInternalFrame.show();
+            try {
+                ingresarEmpleadoInternalFrame.setMaximum(true);
+            } catch (Exception ex) {
+                System.err.println("Ocurrió un error: " + ex.getLocalizedMessage());
+                ex.printStackTrace();
+
+                StringWriter stringWriter = new StringWriter();
+                PrintWriter printWriter = new PrintWriter(stringWriter);
+                ex.printStackTrace(printWriter);
+                String stackError = stringWriter.toString().substring(0, 150);
+                JOptionPane.showMessageDialog(rootPane, "Ocurrió un error: " + stackError);
+            }
+        }
+    }//GEN-LAST:event_listaEmpleadosTableMousePressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private java.awt.Button consultarEmpleadosButton;
+    private javax.swing.JScrollPane jScrollPane1;
+    private java.awt.Label label1;
+    private javax.swing.JTable listaEmpleadosTable;
     // End of variables declaration//GEN-END:variables
 }
