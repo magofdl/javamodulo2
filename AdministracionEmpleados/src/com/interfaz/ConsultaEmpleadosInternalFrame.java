@@ -5,6 +5,12 @@
  */
 package com.interfaz;
 
+import com.negocio.GestionEmpleados;
+import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author CEC
@@ -35,7 +41,7 @@ public class ConsultaEmpleadosInternalFrame extends javax.swing.JInternalFrame {
         apellidosTextField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        listaEmpleadosTable = new javax.swing.JTable();
         buscarButton = new javax.swing.JButton();
         salirButton = new javax.swing.JButton();
 
@@ -48,7 +54,7 @@ public class ConsultaEmpleadosInternalFrame extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Apellidos:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        listaEmpleadosTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -59,7 +65,7 @@ public class ConsultaEmpleadosInternalFrame extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(listaEmpleadosTable);
 
         buscarButton.setText("Buscar");
         buscarButton.addActionListener(new java.awt.event.ActionListener() {
@@ -130,28 +136,47 @@ public class ConsultaEmpleadosInternalFrame extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public String buscarParametro() {
+    public  Map<String, String> buscarParametro() {
         String valorParametro = "";
+
+        Map<String, String> map = new HashMap<String, String>();
 
         if (cedulaTextField.getText().isEmpty() == false) {
             valorParametro = "c";
+            map.put("parametro", "c");
+            map.put("valorParametro", cedulaTextField.getText());
         } else {
             if (nombresTextField.getText().isEmpty() == false) {
                 valorParametro = "n";
+                map.put("parametro", "n");
+                map.put("valorParametro", nombresTextField.getText());
             } else {
                 if (apellidosTextField.getText().isEmpty() == false) {
                     valorParametro = "a";
+                    map.put("parametro", "a");
+                    map.put("valorParametro", apellidosTextField.getText());
                 }
             }
         }
-        return valorParametro;
+        return map;
     }
 
     private void buscarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarButtonActionPerformed
         // TODO add your handling code here:
 
         try {
-            
+            Map<String, String> map = buscarParametro();
+            String nombreParametro = map.get("parametro");
+            String valorParametro =  map.get("valorParametro");
+            if (nombreParametro.length() > 0) {
+                String[] argumentos = new String[1];
+                argumentos[0]=valorParametro;
+                ResultSet busquedaEmpleado=GestionEmpleados.invocarProcedimientoBusqueda(nombreParametro, argumentos);
+                
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Ingrese al menos un campo");
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -167,7 +192,7 @@ public class ConsultaEmpleadosInternalFrame extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable listaEmpleadosTable;
     private javax.swing.JTextField nombresTextField;
     private javax.swing.JButton salirButton;
     // End of variables declaration//GEN-END:variables
