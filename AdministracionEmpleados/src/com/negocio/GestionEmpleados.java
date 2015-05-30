@@ -18,25 +18,32 @@ import java.sql.SQLException;
 public class GestionEmpleados {
 
     public static ResultSet invocarProcedimientoBusqueda(String parametro, String[] argumentos) throws FileNotFoundException, IOException, SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        String nombreSP="";
-        
-        
+        String nombreSP = "";
+
         if (parametro.equalsIgnoreCase("c")) {
-            nombreSP=OperacionesArchivo.leerPropiedad("empleado.sp1");
+            nombreSP = OperacionesArchivo.leerPropiedad("empleado.sp1");
+        } else if (parametro.equalsIgnoreCase("n")) {
+            nombreSP = OperacionesArchivo.leerPropiedad("empleado.sp2");
+        } else if (parametro.equalsIgnoreCase("a")) {
+            nombreSP = OperacionesArchivo.leerPropiedad("empleado.sp3");
         }
-        
-        else if (parametro.equalsIgnoreCase("n")) {
-            nombreSP=OperacionesArchivo.leerPropiedad("empleado.sp2");
-        }
-        
-        else if (parametro.equalsIgnoreCase("a")) {
-            nombreSP=OperacionesArchivo.leerPropiedad("empleado.sp3");
-        }
-        
-        MySqlConnect mySqlConnect = new MySqlConnect();
+
+        MySqlConnect mySqlConnect = null;
+        ResultSet resultado;
+        mySqlConnect = new MySqlConnect();
         mySqlConnect.ejecturarConexionDB();
-        ResultSet resultado=mySqlConnect.ejecutarSpConsulta( argumentos,nombreSP);
-        
+        resultado = mySqlConnect.ejecutarSpConsulta(argumentos, nombreSP);
+
         return resultado;
+    }
+
+    public static void ingresarEmpleado(String[] argumentos) throws FileNotFoundException, IOException, SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        String nombreSPIngreso = "";
+        nombreSPIngreso = OperacionesArchivo.leerPropiedad("empleado.sp0");
+        MySqlConnect mySqlConnect = null;
+        ResultSet resultado;
+        mySqlConnect = new MySqlConnect();
+        mySqlConnect.ejecturarConexionDB();
+        mySqlConnect.ejecutarSP(argumentos, nombreSPIngreso);
     }
 }

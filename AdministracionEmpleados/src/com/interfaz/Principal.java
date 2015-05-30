@@ -5,6 +5,10 @@
  */
 package com.interfaz;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import javax.lang.model.type.PrimitiveType;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.xml.bind.PropertyException;
 
@@ -14,6 +18,8 @@ import javax.xml.bind.PropertyException;
  */
 public class Principal extends javax.swing.JFrame {
 
+    
+    private JInternalFrame previusInternalFrame;
     /**
      * Creates new form Principal
      */
@@ -38,7 +44,7 @@ public class Principal extends javax.swing.JFrame {
         salirMenuItem = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         consultaEmpleadosMenuItem = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        ingresoEmpleadoMenuItem = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
@@ -76,9 +82,14 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu4.add(consultaEmpleadosMenuItem);
 
-        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_2, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem3.setText("Ingreso Empleado");
-        jMenu4.add(jMenuItem3);
+        ingresoEmpleadoMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_2, java.awt.event.InputEvent.CTRL_MASK));
+        ingresoEmpleadoMenuItem.setText("Ingreso Empleado");
+        ingresoEmpleadoMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ingresoEmpleadoMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu4.add(ingresoEmpleadoMenuItem);
 
         jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_3, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem4.setText("Editar empleado");
@@ -115,11 +126,11 @@ public class Principal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 522, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 279, Short.MAX_VALUE)
+            .addGap(0, 513, Short.MAX_VALUE)
         );
 
         pack();
@@ -128,24 +139,62 @@ public class Principal extends javax.swing.JFrame {
     private void salirMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirMenuItemActionPerformed
         // TODO add your handling code here:
         System.exit(0);
-        
+
     }//GEN-LAST:event_salirMenuItemActionPerformed
 
     private void consultaEmpleadosMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaEmpleadosMenuItemActionPerformed
         // TODO add your handling code here:
+        if(previusInternalFrame !=null) {//make sure its not null
+           previusInternalFrame.dispose();//close the previos internalframe
+       }
+        
         ConsultaEmpleadosInternalFrame consultaEmpleadosInternalFrame = new ConsultaEmpleadosInternalFrame();
+        previusInternalFrame=consultaEmpleadosInternalFrame;
+        
         this.add(consultaEmpleadosInternalFrame);
         consultaEmpleadosInternalFrame.show();
         try {
             consultaEmpleadosInternalFrame.setMaximum(true);
         } catch (Exception ex) {
-            System.err.println("Ocurrió un error: "+ex.getMessage());
+            System.err.println("Ocurrió un error: " + ex.getLocalizedMessage());
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(rootPane, "Ocurrió un error: "+ex.getMessage());
+
+            StringWriter stringWriter = new StringWriter();
+            PrintWriter printWriter = new PrintWriter(stringWriter);
+            ex.printStackTrace(printWriter);
+            String stackError = stringWriter.toString().substring(0, 150);
+            JOptionPane.showMessageDialog(rootPane, "Ocurrió un error: " + stackError);
+        }
+
+
+    }//GEN-LAST:event_consultaEmpleadosMenuItemActionPerformed
+
+    private void ingresoEmpleadoMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresoEmpleadoMenuItemActionPerformed
+        // TODO add your handling code here:
+        
+        if (previusInternalFrame != null) {//make sure its not null
+            previusInternalFrame.dispose();//close the previos internalframe
         }
         
+        IngresarEmpleadoInternalFrame ingresarEmpleadoInternalFrame = new IngresarEmpleadoInternalFrame();
+        previusInternalFrame=ingresarEmpleadoInternalFrame;
         
-    }//GEN-LAST:event_consultaEmpleadosMenuItemActionPerformed
+        this.add(ingresarEmpleadoInternalFrame);
+        ingresarEmpleadoInternalFrame.show();
+        try {
+            ingresarEmpleadoInternalFrame.setMaximum(true);
+        } catch (Exception ex) {
+            System.err.println("Ocurrió un error: " + ex.getLocalizedMessage());
+            ex.printStackTrace();
+
+            StringWriter stringWriter = new StringWriter();
+            PrintWriter printWriter = new PrintWriter(stringWriter);
+            ex.printStackTrace(printWriter);
+            String stackError = stringWriter.toString().substring(0, 150);
+            JOptionPane.showMessageDialog(rootPane, "Ocurrió un error: " + stackError);
+        }
+
+    }//GEN-LAST:event_ingresoEmpleadoMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -184,6 +233,7 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem consultaEmpleadosMenuItem;
+    private javax.swing.JMenuItem ingresoEmpleadoMenuItem;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
@@ -191,7 +241,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;

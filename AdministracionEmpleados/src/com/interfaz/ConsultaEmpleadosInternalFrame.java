@@ -6,10 +6,15 @@
 package com.interfaz;
 
 import com.negocio.GestionEmpleados;
+import com.utilidades.UtilidadesValidacion;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -49,6 +54,12 @@ public class ConsultaEmpleadosInternalFrame extends javax.swing.JInternalFrame {
         jLabel1.setText("Búsqueda de empleados");
 
         jLabel2.setText("Cédula:");
+
+        cedulaTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cedulaTextFieldKeyTyped(evt);
+            }
+        });
 
         jLabel3.setText("Nombres:");
 
@@ -136,10 +147,13 @@ public class ConsultaEmpleadosInternalFrame extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public  Map<String, String> buscarParametro() {
+    public Map<String, String> buscarParametro() {
         String valorParametro = "";
 
         Map<String, String> map = new HashMap<String, String>();
+
+        map.put("parametro", "");
+        map.put("valorParametro", "");
 
         if (cedulaTextField.getText().isEmpty() == false) {
             valorParametro = "c";
@@ -161,26 +175,84 @@ public class ConsultaEmpleadosInternalFrame extends javax.swing.JInternalFrame {
         return map;
     }
 
+    public DefaultTableModel llenarTabla(ResultSet resultadoConsulta) throws SQLException {
+        DefaultTableModel defaultTableModel = new DefaultTableModel();
+
+        defaultTableModel.setColumnCount(0);
+        defaultTableModel.addColumn("Identificaion");
+        defaultTableModel.addColumn("Nombres");
+        defaultTableModel.addColumn("Apellidos");
+        defaultTableModel.addColumn("Correo");
+        defaultTableModel.addColumn("Cargo");
+        
+        resultadoConsulta.last();
+        defaultTableModel.setNumRows(resultadoConsulta.getRow());
+        resultadoConsulta.beforeFirst();
+        int fila = 0;
+        while (resultadoConsulta.next()) {
+            String value = resultadoConsulta.getString("emp_identificacion");
+            defaultTableModel.setValueAt(value, fila, 0);
+            value = resultadoConsulta.getString("emp_nombre");
+            defaultTableModel.setValueAt(value, fila, 1);
+            value = resultadoConsulta.getString("emp_apellidos");
+            defaultTableModel.setValueAt(value, fila, 2);
+            value = resultadoConsulta.getString("emp_correo");
+            defaultTableModel.setValueAt(value, fila, 3);
+            value = resultadoConsulta.getString("emp_cargo");
+            defaultTableModel.setValueAt(value, fila, 4);
+            fila++;
+        }
+        
+        return defaultTableModel;
+    }
+
     private void buscarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarButtonActionPerformed
         // TODO add your handling code here:
 
         try {
             Map<String, String> map = buscarParametro();
             String nombreParametro = map.get("parametro");
-            String valorParametro =  map.get("valorParametro");
+            String valorParametro = map.get("valorParametro");
+            ResultSet busquedaEmpleado;
             if (nombreParametro.length() > 0) {
+               
                 String[] argumentos = new String[1];
-                argumentos[0]=valorParametro;
-                ResultSet busquedaEmpleado=GestionEmpleados.invocarProcedimientoBusqueda(nombreParametro, argumentos);
+                argumentos[0] = valorParametro;
+                busquedaEmpleado = GestionEmpleados.invocarProcedimientoBusqueda(nombreParametro, argumentos);
                 
+                  busquedaEmpleado.last();
+            int size = busquedaEmpleado.getRow();
+            System.out.println("sizebusquedaEmpleado"+size);
+            busquedaEmpleado.beforeFirst();
+                
+                DefaultTableModel defaultTableModel=this.llenarTabla(busquedaEmpleado);
+                this.listaEmpleadosTable.setModel(defaultTableModel);
             } else {
                 JOptionPane.showMessageDialog(rootPane, "Ingrese al menos un campo");
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            System.err.println("Ocurrió un error: " + ex.getLocalizedMessage());
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(rootPane, "Ocurrió un error: " + ex.getLocalizedMessage());
+
+//            StringWriter stringWriter = new StringWriter();
+//            PrintWriter printWriter = new PrintWriter(stringWriter);
+//            ex.printStackTrace(printWriter);
+//            String stackError=stringWriter.toString().substring(0, 150);
+//            JOptionPane.showMessageDialog(rootPane, "Ocurrió un error: "+stackError);
         }
     }//GEN-LAST:event_buscarButtonActionPerformed
+
+    private void cedulaTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cedulaTextFieldKeyTyped
+        // TODO add your handling code here:
+        System.out.println(String.valueOf(evt.getKeyChar()));
+        boolean soloNumeros=UtilidadesValidacion.validarSoloNumeros(this.cedulaTextField.getText()+String.valueOf(evt.getKeyChar()));
+        
+        if (soloNumeros==false) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_cedulaTextFieldKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

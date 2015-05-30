@@ -27,7 +27,6 @@ public class UtilidadesValidacion {
                 + "biz|info|mobi|name|aero|asia|jobs|museum)$");
         Matcher matcher = pattern.matcher(correo);
 
-       
         if (matcher.find() == true) {
             return esCorreoValido = true;
         }
@@ -63,9 +62,33 @@ public class UtilidadesValidacion {
     }
 
     public static String eliminarCaracteresProhibidos(String cadena) {
-        String cadenaAuxiliar="";
-        String regex="[^A-Za-z0-9\\.\\-\\,\\s]+";
-        cadenaAuxiliar=cadena.replaceAll(regex, "");
+        String cadenaAuxiliar = "";
+        String regex = "[^A-Za-z0-9\\.\\-\\,\\s]+";
+        cadenaAuxiliar = cadena.replaceAll(regex, "");
         return cadenaAuxiliar;
+    }
+
+    public static boolean validarSoloNumeros(String texto) {
+        boolean cadenaSoloNumeros = false;
+
+        Pattern pattern = Pattern.compile("^[0-9]*$");
+        Matcher matcher = pattern.matcher(texto);
+
+        if (matcher.find() == true) {
+            cadenaSoloNumeros = true;
+        }
+        return cadenaSoloNumeros;
+    }
+    
+     public static boolean validarSoloLetras(String texto) {
+        boolean cadenaSoloLetras = false;
+
+        Pattern pattern = Pattern.compile("^[A-Z][a-z]\\s*$");
+        Matcher matcher = pattern.matcher(texto);
+
+        if (matcher.find() == true) {
+            cadenaSoloLetras = true;
+        }
+        return cadenaSoloLetras;
     }
 }
